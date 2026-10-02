@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "7/HZv1hSigBALoBCx40gX8gtZaWSRnoiX2Sj7p5CwuE=",
+  "Source": "Simu.Api",
+  "BasePath": "_content/Simu.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

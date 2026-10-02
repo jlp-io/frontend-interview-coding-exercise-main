@@ -1,0 +1,149 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api.Tests/Simu.Api.Tests.csproj": {}
+  },
+  "projects": {
+    "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api.Tests/Simu.Api.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api.Tests/Simu.Api.Tests.csproj",
+        "projectName": "Simu.Api.Tests",
+        "projectPath": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api.Tests/Simu.Api.Tests.csproj",
+        "packagesPath": "/Users/jamiepaterson/.nuget/packages/",
+        "outputPath": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/jamiepaterson/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api/Simu.Api.csproj": {
+                "projectPath": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api/Simu.Api.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.12.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.8.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api/Simu.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api/Simu.Api.csproj",
+        "projectName": "Simu.Api",
+        "projectPath": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api/Simu.Api.csproj",
+        "packagesPath": "/Users/jamiepaterson/.nuget/packages/",
+        "outputPath": "/Users/jamiepaterson/Downloads/simu-kit/backend/Simu.Api/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/jamiepaterson/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

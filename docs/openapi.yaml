@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  title: SIMU loan simulation API
+  version: 1.0.0
+servers:
+  - url: http://localhost:5080
+paths:
+  /api/v1/rules:
+    get:
+      operationId: getInputRules
+      summary: Return the input bounds and precision used by the API
+      responses:
+        '200':
+          description: Input validation rules used by the simulation endpoint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputRules'
+  /api/v1/health:
+    get:
+      operationId: getHealth
+      responses:
+        '200':
+          description: API is available
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, example: ok }
+  /api/v1/simulations:
+    post:
+      operationId: createSimulation
+      summary: Validate inputs and calculate a fixed-rate loan schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationRequest'
+      responses:
+        '200':
+          description: Annual and monthly rates, monthly payment, and all monthly schedule rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationResponse'
+        '400':
+          description: All input validation errors, grouped by field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+components:
+  schemas:
+    SimulationRequest:
+      type: object
+      required: [principal, durationMonths, annualIncome]
+      properties:
+        principal: { type: number, format: decimal, minimum: 20000, maximum: 310000, multipleOf: 0.01, example: 100000 }
+        durationMonths: { type: integer, minimum: 180, maximum: 360, example: 360 }
+        annualIncome: { type: number, format: decimal, minimum: 0, maximum: 53900, multipleOf: 0.01, example: 28000 }
+        startMonth: { type: string, nullable: true, pattern: '^\d{4}-(0[1-9]|1[0-2])$', example: '2021-01', description: First installment month; omitted or null uses the current month. }
+    SimulationResponse:
+      type: object
+      required: [annualRate, monthlyRate, monthlyPayment, totalInterest, totalRepayment, schedule]
+      properties:
+        annualRate: { type: number, format: decimal, example: 2.5 }
+        monthlyRate: { type: number, format: decimal, example: 0.208309, description: Monthly rate as a percentage. }
+        monthlyPayment: { type: number, format: decimal, example: 395.11 }
+        totalInterest: { type: number, format: decimal, example: 42238.06 }
+        totalRepayment: { type: number, format: decimal, example: 142238.06 }
+        schedule:
+          type: array
+          items: { $ref: '#/components/schemas/PaymentRow' }
+    PaymentRow:
+      type: object
+      required: [month, dueMonth, payment, interest, principal, balance]
+      properties:
+        month: { type: integer, example: 1 }
+        dueMonth: { type: string, format: year-month, pattern: '^\d{4}-(0[1-9]|1[0-2])$', example: '2021-01', description: Effective payment month in ISO year-month format. }
+        payment: { type: number, format: decimal, example: 395.11 }
+        interest: { type: number, format: decimal, example: 208.31 }
+        principal: { type: number, format: decimal, example: 186.80 }
+        balance: { type: number, format: decimal, example: 99813.20 }
+    ValidationError:
+      type: object
+      required: [code, message, errors]
+      properties:
+        code: { type: string, example: VALIDATION_FAILED }
+        message: { type: string }
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items: { $ref: '#/components/schemas/ApiError' }
+    ApiError:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string, example: PRINCIPAL_OUT_OF_RANGE }
+        message: { type: string }
+    InputRules:
+      type: object
+      required: [principal, durationMonths, annualIncome]
+      properties:
+        principal: { $ref: '#/components/schemas/InputConstraint' }
+        durationMonths: { $ref: '#/components/schemas/InputConstraint' }
+        annualIncome: { $ref: '#/components/schemas/InputConstraint' }
+    InputConstraint:
+      type: object
+      required: [minimum, maximum, maximumDecimalPlaces]
+      properties:
+        minimum: { type: number }
+        maximum: { type: number }
+        maximumDecimalPlaces: { type: integer, minimum: 0 }

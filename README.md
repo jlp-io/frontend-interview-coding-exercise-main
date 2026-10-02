@@ -1,87 +1,44 @@
-# 💼 CreateFuture Coding challenge
+# SIMU — Simulateur de prêt
 
-## 📋 Overview
+Un simulateur de prêt hypothécaire adaptatif pour estimer les mensualités, le coût total du crédit et consulter un tableau d’amortissement mois par mois.
 
-You'll be working with a **transaction dashboard** application built with Next.js 16, React 19, TypeScript, and v4 Tailwind CSS. The dashboard displays financial transactions with statistics and a data table. Your task is to add advanced filtering capabilities.
+**Dernière mise à jour: Vendredi Oct 2 15:02:54 2026**
 
-## 🚀 Getting Started
+## Fichier de rendu
 
-### Prerequisites
+Les bundles sont disponibles en téléchargement dans ce dépôt (candidat-PATERSON.bundle et candidat-PATERSON.bundle.sha256).
 
-- Node.js 22.13.0
-- Yarn package manager
+## Prérequis
 
-### Installation
+- Node.js 18.17 ou version ultérieure
+- SDK .NET 8
+- Yarn 1.22 ou version ultérieure
 
-```bash
-# Install dependencies
+## Installation et lancement
+
+```sh
+git clone https://github.com/jlp-io/frontend-interview-coding-exercise-main.git
 yarn install
-
-# Start development server
 yarn dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to see the application.
+`yarn dev` lance le frontend Next.js à l’adresse [http://localhost:3000](http://localhost:3000) et l’API ASP.NET Core sur `http://localhost:5080`. `yarn build` compile l’API et crée une version de production du frontend. `yarn start` lance les deux services en mode production (exécutez d’abord la commande de compilation).
 
-### Running Tests
+## Fonctionnalités
 
-```bash
-# Run all tests
-yarn test
+- Modifiez le capital emprunté, la durée, le revenu annuel et le mois de la première échéance. L’API sélectionne les taux annuel et mensuel fixes selon des tranches de revenus configurables.
+- Consultez la mensualité, le total des intérêts, le montant total remboursé et un graphique de l’évolution du solde.
+- Parcourez le tableau d’amortissement et exportez l’échéancier complet au format CSV, avec des points-virgules comme séparateurs.
+- Interface adaptative pour ordinateur et mobile.
 
-# Run tests in watch mode
-yarn test:watch
+## Hypothèses de calcul
 
-# Run tests with coverage
-yarn test:coverage
-```
+Le backend est la source de référence pour la validation, la sélection du taux et les calculs. Les tranches de taux se trouvent dans `backend/Simu.Api/appsettings.json`. Le taux mensuel défini dans la tranche fait foi : il n’est pas recalculé à partir du taux annuel. Les calculs utilisent le type `decimal` de .NET; les valeurs renvoyées sont arrondies au centime, avec arrondi à la moitié supérieure. Consultez la [note de choix techniques](NOTE_CHOIX_TECHNIQUES.md).
 
-## ⚠️ Client Components
+## API
 
-All components in this project are **client-side rendered**. When creating new components, remember to add the `'use client'` directive at the top of the file:
+L’API versionnée expose `GET http://localhost:5080/api/v1/rules` pour les bornes de saisie et `POST http://localhost:5080/api/v1/simulations` pour calculer une simulation. Sa spécification OpenAPI se trouve dans [docs/openapi.yaml](docs/openapi.yaml).
 
-```tsx
-'use client';
+## Tests
 
-export const MyComponent = () => {
-...
-}
-```
-
-The only exception is the API route (`app/api/`), which remains server-side. Data fetching is done client-side via `fetch` calls to the API.
-
-## 🎯 Your Challenge: Add Transaction Filtering
-
-### Task 1. Description
-
-Users need the ability to filter transactions by multiple criteria. Your task is to build a comprehensive filter system that works seamlessly with the existing dashboard.
-
-- Include **unit testing** for the new component(s).
-- All filtering functionality should be done via front-end only.
-
-### Requirements
-
-Build a `TransactionsTableFilters` component with the following features:
-
-#### 1.1 **Search Filter**
-
-- Text input that filters by Transaction ID and Description.
-- Case-insensitive matching
-
-#### 1.2 **Category Filter**
-
-- Multi-select dropdown/chips for categories
-- Available categories: `Groceries`, `Food & Dining`, `Electronics`, `Transport`, `Utilities`, `Entertainment`, `Travel`, `Subscriptions`, `Healthcare`
-- Users can select multiple categories simultaneously
-
-#### 1.3 **Amount Range Filter**
-
-- Two number inputs: Min Amount and Max Amount
-- Filter transactions within the specified range
-- Handle edge cases (only min, only max, invalid ranges)
-
-#### 1.4 **Date Range Filter**
-
-- Date range picker with "From" and "To" date inputs
-- Filter transactions within the selected date range
-- Support open-ended ranges (only "From" or only "To" date)
+Exécutez `yarn test:api` pour lancer les tests unitaires du backend et `yarn test:e2e` pour les deux scénarios de test dans le navigateur. Installez une fois le navigateur Playwright avec `yarn playwright install chromium`. `yarn build` compile le frontend.
